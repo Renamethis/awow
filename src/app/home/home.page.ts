@@ -38,11 +38,8 @@ export class HomePage {
            });
        } else {
            this.token = value;
-       }
-        // tslint:disable-next-line:max-line-length
-       this.http.get('https://api.worldofwarships.ru/wows/account/info/?application_id=8e1ae50869c452ec624476262bb20f0d&fields=created_at,karma,last_battle_time,leveling_points,leveling_tier,private.credits,private.free_xp,private.gold,statistics.battles,statistics.club.draws,statistics.club.losses,statistics.club.wins&access_token=' + this.token, {}, {}).then(data => {
-        alert(JSON.parse(data.data).data);
-       });
+           alert(this.token);
+        }
     });
   }
 
