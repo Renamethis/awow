@@ -12,6 +12,7 @@ export class HomePage {
   token: string;
   uri: any;
   expiresAt;
+  appId: string = "8e1ae50869c452ec624476262bb20f0d";
   constructor(
     private http: HTTP,
     private iab: InAppBrowser,
@@ -21,19 +22,22 @@ export class HomePage {
   }
 
   private async init() {
+    this.storage.set("appId", this.appId);
+
     this.storage.get("token").then(async value => {
       if (value == null) {
         await this.getExpiresAt();
         // tslint:disable-next-line:max-line-length
         const browser = this.iab.create(
-          "https://api.worldoftanks.ru/wot/auth/login/?application_id=8e1ae50869c452ec624476262bb20f0d&expires_at=" +
-            this.expiresAt +
-            "&display=page&redirect_uri=https://google.com",
+          `https://api.worldoftanks.ru/wot/auth/login/?application_id=${this.appId}&expires_at=${this.expiresAt}&display=page&redirect_uri=https://google.com`,
           "_blank",
           { fullscreen: "yes" }
         );
         browser.on("loadstart").subscribe(event => {
-          if (event.url.substr(0, event.url.indexOf("?")) === "https://google.com/") {
+          if (
+            event.url.substr(0, event.url.indexOf("?")) ===
+            "https://google.com/"
+          ) {
             // tslint:disable-next-line:max-line-length
             this.token = event.url.substr(
               event.url.indexOf("access_token") + 13,
@@ -45,7 +49,6 @@ export class HomePage {
           }
         });
       } else {
-
       }
     });
   }
