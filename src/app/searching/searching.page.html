@@ -16,9 +16,10 @@
       <ion-item *ngFor="let player of players" button (click)="applySearch(player.account_id)">
         <ion-ripple-effect></ion-ripple-effect>
         <ion-label>
-          <h2><b>[{{ player.clanTag }}]</b> {{player.nickname}}</h2>
-          <p><b>Победы: </b> {{player.wins}} <b>Бои: </b>{{player.battles}}</p>
+          <h2><b *ngIf="player.clanTag">[{{ player.clanTag }}]</b> {{player.nickname}}</h2>
         </ion-label>
+        <ion-note slot="end" *ngIf="player.battles != 0">{{(player.wins/player.battles*100).toFixed(2) + '%'}}</ion-note>
+        <ion-note slot="end" *ngIf="player.battles == 0">__</ion-note>
       </ion-item>
     </ion-list>
   </div>

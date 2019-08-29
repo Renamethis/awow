@@ -43,7 +43,7 @@ export class SearchingPage implements OnInit {
               .get(
                 "https://api.worldofwarships.ru/wows/account/info/?application_id=8e1ae50869c452ec624476262bb20f0d&account_id=" +
                   pl.account_id +
-                  "&fields=statistics.pvp.wins,statistics.battles",
+                  "&fields=statistics.pvp.wins,statistics.pvp.battles",
                 {},
                 {}
               )
@@ -55,7 +55,7 @@ export class SearchingPage implements OnInit {
                   clanTag,
                   wins: JSON.parse(dt.data).data[pl.account_id].statistics.pvp
                     .wins,
-                  battles: JSON.parse(dt.data).data[pl.account_id].statistics
+                  battles: JSON.parse(dt.data).data[pl.account_id].statistics.pvp
                     .battles
                 });
               });
