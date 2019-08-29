@@ -33,10 +33,7 @@ export class HomePage {
           { fullscreen: "yes" }
         );
         browser.on("loadstart").subscribe(event => {
-          if (
-            event.url.substr(0, event.url.indexOf("?")) ===
-            "https://google.com/"
-          ) {
+          if (event.url.substr(0, event.url.indexOf("?")) === "https://google.com/") {
             // tslint:disable-next-line:max-line-length
             this.token = event.url.substr(
               event.url.indexOf("access_token") + 13,
@@ -48,21 +45,10 @@ export class HomePage {
           }
         });
       } else {
-        this.token = value;
-        alert(this.token);
-        this.http
-          .post(
-            "https://api.worldoftanks.ru/wot/auth/prolongate/?application_id=8e1ae50869c452ec624476262bb20f0d",
-            { access_token: this.token, expires_at: "1568200768" },
-            { "Content-Type": "application/json" }
-          )
-          .then(data => {
-            alert(data.data);
-          });
+
       }
     });
   }
-
   private async getExpiresAt() {
     await this.http
       .get("http://worldtimeapi.org/api/timezone/Europe/London", {}, {})

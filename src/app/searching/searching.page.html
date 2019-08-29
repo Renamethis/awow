@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Игроки
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-searchbar placeholder="Search nicknames" (ionChange)="searchNames($event)">
+  </ion-searchbar>
+  <div *ngIf="flag">
+      <ion-list>
+        <ion-item *ngFor="let player of players" button (click)="applySearch(player.account_id)" >
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-label>
+            <h2>{{player.nickname}}</h2>
+            <p><b>Победы: </b> {{player.wins}} <b>Бои: </b>{{player.battles}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div *ngIf="!flag">
+      <ion-list>
+        <ion-item *ngFor="let p of [1,2,3,4,5,6,7,8,9,10]">
+          <ion-label>
+            <h2>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </h2>
+            <p><ion-skeleton-text animated style="width: 50%"></ion-skeleton-text></p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+</ion-content>
