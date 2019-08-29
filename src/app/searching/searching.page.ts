@@ -31,9 +31,13 @@ export class SearchingPage implements OnInit {
           {},
           {}
         )
-        .then(data => {
+        .then(async data => {
           for (const pl of JSON.parse(data.data).data) {
-            console.log(this.clansService.getInfo(pl.account_id));
+            const clanInfo = await this.clansService.getInfo(pl.account_id);
+            let clanTag;
+            if (clanInfo) {
+              clanTag = clanInfo.tag;
+            }
             // tslint:disable-next-line:max-line-length
             this.http
               .get(
@@ -48,6 +52,7 @@ export class SearchingPage implements OnInit {
                 this.players.push({
                   account_id: pl.account_id,
                   nickname: pl.nickname,
+                  clanTag,
                   wins: JSON.parse(dt.data).data[pl.account_id].statistics.pvp
                     .wins,
                   battles: JSON.parse(dt.data).data[pl.account_id].statistics
