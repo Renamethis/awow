@@ -3,6 +3,7 @@ import { HTTP } from "@ionic-native/http/ngx";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { Storage } from "@ionic/storage";
 import { ThrowStmt } from "@angular/compiler";
+//import { timingSafeEqual } from 'crypto';
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
@@ -11,6 +12,7 @@ import { ThrowStmt } from "@angular/compiler";
 export class HomePage {
   token: string;
   uri: any;
+  nick: any;
   expiresAt;
   appId: string = "8e1ae50869c452ec624476262bb20f0d";
   constructor(
@@ -33,24 +35,36 @@ export class HomePage {
           "_blank",
           { fullscreen: "yes" }
         );
-        browser.on("loadstart").subscribe(event => {
+         browser.on("loadstart").subscribe(event => {
           if (
             event.url.substr(0, event.url.indexOf("?")) ===
             "https://google.com/"
           ) {
             // tslint:disable-next-line:max-line-length
+            this.parseUrl(event.url, "https://google.com/");
             this.token = event.url.substr(
               event.url.indexOf("access_token") + 13,
               event.url.indexOf("&nickname") -
                 (event.url.indexOf("access_token") + 13)
             );
             this.storage.set("token", this.token);
+            this.nick = event.url.substr(event.url.indexOf('nickname') + 9, event.url.indexOf('&account_id')-(event.url.indexOf('nickname')+9));
+            this.storage.set("nickname", this.nick);
+            alert(this.nick);
             browser.close();
           }
         });
       } else {
+        this.storage.get('nickname').then(data => {
+          this.nick = data;
+          alert(this.nick);
+        });
       }
     });
+  }
+  private parseUrl(url: any, rpurl: any) {
+    url.substr(url.indexOf(rpurl)+rpurl.length, url.length-rpurl.length);
+    alert(url);
   }
   private async getExpiresAt() {
     await this.http

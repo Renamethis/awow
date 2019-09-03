@@ -28,6 +28,7 @@ export class AppComponent {
       icon: 'people'
     }
   ];
+  nick: any;
   expiresAt: any;
   constructor(
     private platform: Platform,
