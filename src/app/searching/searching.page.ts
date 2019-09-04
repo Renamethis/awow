@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { HTTP } from "@ionic-native/http/ngx";
 import { Router } from "@angular/router";
 import { ClansService } from "../services/clans.service";
+import { parse } from 'url';
 @Component({
   selector: "app-searching",
   templateUrl: "./searching.page.html",

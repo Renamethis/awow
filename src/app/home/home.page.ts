@@ -3,6 +3,7 @@ import { HTTP } from "@ionic-native/http/ngx";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { Storage } from "@ionic/storage";
 import { ThrowStmt } from "@angular/compiler";
+import { range } from 'rxjs';
 //import { timingSafeEqual } from 'crypto';
 @Component({
   selector: "app-home",
@@ -41,16 +42,11 @@ export class HomePage {
             "https://google.com/"
           ) {
             // tslint:disable-next-line:max-line-length
-            this.parseUrl(event.url, "https://google.com/");
-            this.token = event.url.substr(
-              event.url.indexOf("access_token") + 13,
-              event.url.indexOf("&nickname") -
-                (event.url.indexOf("access_token") + 13)
-            );
+            let info: any = this.parseUrl(event.url);
+            this.token = info.access_token;
             this.storage.set("token", this.token);
-            this.nick = event.url.substr(event.url.indexOf('nickname') + 9, event.url.indexOf('&account_id')-(event.url.indexOf('nickname')+9));
+            this.nick = info.nickname;
             this.storage.set("nickname", this.nick);
-            alert(this.nick);
             browser.close();
           }
         });
@@ -62,9 +58,16 @@ export class HomePage {
       }
     });
   }
-  private parseUrl(url: any, rpurl: any) {
-    url.substr(url.indexOf(rpurl)+rpurl.length, url.length-rpurl.length);
-    alert(url);
+  private parseUrl(url: any) {
+    let inform: any = {};
+    url = url.substr(url.indexOf("?")+1, url.length-url.indexOf('?'));
+    console.log(url);
+    while(url.indexOf('&') != -1) {
+      inform[url.substr(0, url.indexOf('='))] = url.substr(url.indexOf('=') + 1, url.indexOf('&')-url.indexOf('=')-1);
+      url = url.substr(url.indexOf('&')+1, url.length-url.indexOf('&'));
+    }
+    inform[url.substr(0, url.indexOf('='))] = url.substr(url.indexOf('=') + 1, url.length-url.indexOf('=')-1);
+    return inform;
   }
   private async getExpiresAt() {
     await this.http
