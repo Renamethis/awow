@@ -15,7 +15,7 @@ export class UserService {
       if (value != null) {
         await this.getExpiresAt();
         this.http.post(
-            'https://api.worldoftanks.ru/wot/auth/prolongate/?application_id=${this.appId}',
+            `https://api.worldoftanks.ru/wot/auth/prolongate/?application_id=${this.appId}`,
             { access_token: value, expires_at: this.getExpiresAt() },
             { "Content-Type": "application/json" })
             .then(data => {

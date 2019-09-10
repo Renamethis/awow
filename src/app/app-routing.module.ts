@@ -16,7 +16,8 @@ const routes: Routes = [
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
   },
   { path: 'searching', loadChildren: () => import('./searching/searching.module').then(m => m.SearchingPageModule) },
-  { path: 'srchinfo/:account_id', loadChildren: () => import('./srchinfo/srchinfo.module').then(m => m.SrchinfoPageModule) },
+  { path: 'srchinfo/:account_id', loadChildren: () => import('./srchinfo/srchinfo.module').then(m => m.SrchinfoPageModule) },  { path: 'clans', loadChildren: './clans/clans.module#ClansPageModule' },
+
 ];
 
 @NgModule({

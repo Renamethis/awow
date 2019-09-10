@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { HTTP } from "@ionic-native/http/ngx";
 import { Router } from "@angular/router";
 import { ClansService } from "../services/clans.service";
-import { parse } from 'url';
+import { parse } from "url";
 @Component({
   selector: "app-searching",
   templateUrl: "./searching.page.html",
@@ -34,7 +34,9 @@ export class SearchingPage implements OnInit {
         )
         .then(async data => {
           for (const pl of JSON.parse(data.data).data) {
-            const clanInfo = await this.clansService.getInfo(pl.account_id);
+            const clanInfo = await this.clansService.getInfoForPlayer(
+              pl.account_id
+            );
             let clanTag;
             if (clanInfo) {
               clanTag = clanInfo.tag;
@@ -56,8 +58,8 @@ export class SearchingPage implements OnInit {
                   clanTag,
                   wins: JSON.parse(dt.data).data[pl.account_id].statistics.pvp
                     .wins,
-                  battles: JSON.parse(dt.data).data[pl.account_id].statistics.pvp
-                    .battles
+                  battles: JSON.parse(dt.data).data[pl.account_id].statistics
+                    .pvp.battles
                 });
               });
           }
@@ -69,6 +71,10 @@ export class SearchingPage implements OnInit {
         });
     }
   }
+  range(limit: number) {
+    return Array(limit);
+  }
+
   applySearch(account_id: any) {
     this.router.navigate(["/srchinfo", account_id]);
   }
