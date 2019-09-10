@@ -30,7 +30,7 @@ export class SrchinfoPage implements OnInit {
         )
         .then(async data => {
           this.player = JSON.parse(data.data).data[this.accid];
-          const clanInfo = await this.clansService.getInfo(this.accid);
+          const clanInfo = await this.clansService.getInfoForPlayer(this.accid);
           if (clanInfo) {
             this.player.clanTag = clanInfo.tag;
           }

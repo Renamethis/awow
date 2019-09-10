@@ -4,38 +4,31 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Игроки
+      Кланы
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-searchbar
-    placeholder="Search nicknames"
-    (ionChange)="searchNames($event)"
-  >
+  <ion-searchbar placeholder="Search clans" (ionChange)="searchClans($event)">
   </ion-searchbar>
-  <div *ngIf="flag">
+  <div *ngIf="clans">
     <ion-list>
       <ion-item
-        *ngFor="let player of players"
+        *ngFor="let clan of clans"
         button
-        (click)="applySearch(player.account_id)"
+        (click)="applySearch(clan.account_id)"
       >
         <ion-ripple-effect></ion-ripple-effect>
         <ion-label>
           <h2>
-            <b *ngIf="player.clanTag">[{{ player.clanTag }}]</b>
-            {{ player.nickname }}
+            <b>[{{ clan.tag }}]</b>
+            {{ clan.name }}
           </h2>
         </ion-label>
-        <ion-note slot="end" *ngIf="player.battles != 0">{{
-          ((player.wins / player.battles) * 100).toFixed(2) + "%"
-        }}</ion-note>
-        <ion-note slot="end" *ngIf="player.battles == 0">__</ion-note>
       </ion-item>
     </ion-list>
   </div>
-  <div *ngIf="!flag">
+  <div *ngIf="!clans">
     <ion-list>
       <ion-item *ngFor="let p of range(15)">
         <ion-label>
