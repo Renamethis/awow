@@ -45,18 +45,6 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-    this.storage.get("token").then(async value => {
-      if (value != null) {
-        await this.getExpiresAt();
-        this.http.post(
-            "https://api.worldoftanks.ru/wot/auth/prolongate/?application_id=8e1ae50869c452ec624476262bb20f0d",
-            { access_token: value, expires_at: this.expiresAt },
-            { "Content-Type": "application/json" })
-            .then(data => {
-              this.storage.set('token', JSON.parse(data.data).data.access_token);
-            });
-      }
-    });
   }
   private async getExpiresAt() {
     await this.http

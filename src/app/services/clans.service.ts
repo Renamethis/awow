@@ -20,7 +20,6 @@ export class ClansService {
         )
         .then(async response => {
           const clPlInfo = JSON.parse(response.data);
-
           if (Object.values(clPlInfo.data)) {
             const clanInfo = clPlInfo.data[accId];
             if (clanInfo) {

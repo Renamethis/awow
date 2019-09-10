@@ -2,8 +2,7 @@ import { Component } from "@angular/core";
 import { HTTP } from "@ionic-native/http/ngx";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { Storage } from "@ionic/storage";
-import { ThrowStmt } from "@angular/compiler";
-import { range } from 'rxjs';
+import { UserService } from "../services/user.service";
 //import { timingSafeEqual } from 'crypto';
 @Component({
   selector: "app-home",
@@ -13,20 +12,20 @@ import { range } from 'rxjs';
 export class HomePage {
   token: string;
   uri: any;
-  nick: any;
+  nick: any = null;
   expiresAt;
   appId: string = "8e1ae50869c452ec624476262bb20f0d";
   constructor(
     private http: HTTP,
     private iab: InAppBrowser,
-    private storage: Storage
+    private storage: Storage,
+    private user: UserService
   ) {
     this.init();
   }
 
   private async init() {
     this.storage.set("appId", this.appId);
-
     this.storage.get("token").then(async value => {
       if (value == null) {
         await this.getExpiresAt();
@@ -68,15 +67,5 @@ export class HomePage {
     }
     inform[url.substr(0, url.indexOf('='))] = url.substr(url.indexOf('=') + 1, url.length-url.indexOf('=')-1);
     return inform;
-  }
-  private async getExpiresAt() {
-    await this.http
-      .get("http://worldtimeapi.org/api/timezone/Europe/London", {}, {})
-      .then(response => {
-        const data = JSON.parse(response.data);
-        // 15 days in unixtime
-        const offset = 1296000;
-        this.expiresAt = Number(data.unixtime) + offset;
-      });
   }
 }
