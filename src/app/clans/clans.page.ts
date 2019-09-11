@@ -15,17 +15,21 @@ export class ClansPage implements OnInit {
     private router: Router,
     private clansService: ClansService
   ) {}
-
+  private isSearching: boolean = false;
   async searchClans(event: any) {
     if (event.target.value.length >= 2) {
+      this.isSearching = true;
       this.clans = [];
       const clanName = event.target.value;
       this.clans = await this.clansService.getInfoByTag(clanName);
+      this.isSearching = false;
     }
   }
   range(limit: number) {
     return Array(limit);
   }
-  applySearch() {}
+  applySearch(clanId: number) {
+    this.router.navigate(["/clan-info", clanId]);
+  }
   ngOnInit() {}
 }

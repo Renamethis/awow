@@ -11,12 +11,12 @@
 <ion-content>
   <ion-searchbar placeholder="Search clans" (ionChange)="searchClans($event)">
   </ion-searchbar>
-  <div *ngIf="clans">
+  <div *ngIf="!isSearching">
     <ion-list>
       <ion-item
         *ngFor="let clan of clans"
         button
-        (click)="applySearch(clan.account_id)"
+        (click)="applySearch(clan.clan_id)"
       >
         <ion-ripple-effect></ion-ripple-effect>
         <ion-label>
@@ -28,7 +28,7 @@
       </ion-item>
     </ion-list>
   </div>
-  <div *ngIf="!clans">
+  <div *ngIf="isSearching">
     <ion-list>
       <ion-item *ngFor="let p of range(15)">
         <ion-label>

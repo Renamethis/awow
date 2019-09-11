@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="info">
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="./assets/av.svg" />
+      </ion-avatar>
+      <ion-label>
+        <h1>
+          <b>[{{ info.tag }}]</b> {{ info.name }}
+        </h1>
+        <b>Дата основания: </b>
+        <p>{{ info.created_at }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-list-header mode="md">
+      Информация о клане
+    </ion-list-header>
+    <ion-item>
+      <ion-item>
+        <ion-label>Описание</ion-label>
+        <ion-note slot="end" color="primary">{{ info.description }}</ion-note>
+      </ion-item>
+    </ion-item>
+    <ion-item>
+      <ion-item>
+        <ion-label>Количество членов калана</ion-label>
+        <ion-note slot="end" color="primary">{{ info.members_count }}</ion-note>
+      </ion-item>
+    </ion-item>
+  </ion-list>
+</ion-content>

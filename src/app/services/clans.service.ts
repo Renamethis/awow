@@ -37,7 +37,7 @@ export class ClansService {
     return info;
   }
 
-  private async getInfoById(clanId: any) {
+  async getInfoById(clanId: any) {
     let info;
     await this.http
       .get(

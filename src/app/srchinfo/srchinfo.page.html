@@ -10,11 +10,15 @@
   <ion-list *ngIf="player">
     <ion-item>
       <ion-avatar slot="start">
-        <img src="./assets/av.svg">
+        <img src="./assets/av.svg" />
       </ion-avatar>
       <ion-label>
-        <h1><b *ngIf="player.clanTag">[{{player.clanTag}}]</b> {{player.nickname}}</h1>
-        <p>{{date}}</p>
+        <h1>
+          <b *ngIf="player.clanTag">[{{ player.clanTag }}]</b>
+          {{ player.nickname }}
+        </h1>
+        <b>Дата последнего боя: </b>
+        <p>{{ date }}</p>
       </ion-label>
     </ion-item>
     <ion-list-header mode="md">
@@ -23,19 +27,25 @@
     <ion-item>
       <ion-item>
         <ion-label>Пройденные мили</ion-label>
-        <ion-note slot="end" color="primary">{{player.statistics.distance}}</ion-note>
+        <ion-note slot="end" color="primary">{{
+          player.statistics.distance
+        }}</ion-note>
       </ion-item>
     </ion-item>
     <ion-item>
       <ion-item>
         <ion-label>Победы</ion-label>
-        <ion-note slot="end" color="primary">{{player.statistics.pvp.wins}}</ion-note>
+        <ion-note slot="end" color="primary">{{
+          player.statistics.pvp.wins
+        }}</ion-note>
       </ion-item>
     </ion-item>
     <ion-item>
       <ion-item>
         <ion-label>Общее число боев</ion-label>
-        <ion-note slot="end" color="primary">{{player.statistics.pvp.battles}}</ion-note>
+        <ion-note slot="end" color="primary">{{
+          player.statistics.pvp.battles
+        }}</ion-note>
       </ion-item>
     </ion-item>
   </ion-list>

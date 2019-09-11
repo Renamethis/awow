@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { HTTP } from "@ionic-native/http/ngx";
 import { ClansService } from "../services/clans.service";
+import { HelperService } from "../services/helper.service";
 @Component({
   selector: "app-srchinfo",
   templateUrl: "./srchinfo.page.html",
@@ -14,7 +15,8 @@ export class SrchinfoPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HTTP,
-    private clansService: ClansService
+    private clansService: ClansService,
+    private helper: HelperService
   ) {}
 
   ngOnInit() {
@@ -34,11 +36,7 @@ export class SrchinfoPage implements OnInit {
           if (clanInfo) {
             this.player.clanTag = clanInfo.tag;
           }
-          console.log(this.player);
-          console.log(JSON.parse(data.data));
-          this.date = new Date(this.player.last_battle_time * 1000)
-            .toLocaleString()
-            .replace(",", "");
+          this.date = this.helper.getTimeString(this.player.last_battle_time);
         });
     });
   }
