@@ -10,14 +10,13 @@
   <ion-list *ngIf="info">
     <ion-item>
       <ion-avatar slot="start">
-        <img src="./assets/av.svg" />
+        <img src="./assets/people.svg" alt="" />
       </ion-avatar>
       <ion-label>
         <h1>
           <b>[{{ info.tag }}]</b> {{ info.name }}
         </h1>
-        <b>Дата основания: </b>
-        <p>{{ info.created_at }}</p>
+        <p><b>Дата основания: </b>{{ info.created_at }}</p>
       </ion-label>
     </ion-item>
     <ion-list-header mode="md">
@@ -34,6 +33,18 @@
         <ion-label>Количество членов калана</ion-label>
         <ion-note slot="end" color="primary">{{ info.members_count }}</ion-note>
       </ion-item>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="members">
+    <ion-list-header mode="md">
+      Члены клана:
+    </ion-list-header>
+    <ion-item
+      *ngFor="let member of members"
+      button
+      (click)="showMemberInfo(member.account_id)"
+      >{{ member.account_name }}
     </ion-item>
   </ion-list>
 </ion-content>

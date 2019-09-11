@@ -24,7 +24,7 @@ export class ClansService {
             const clanInfo = clPlInfo.data[accId];
             if (clanInfo) {
               if (clanInfo.clan_id) {
-                info = this.getInfoById(clanInfo.clan_id);
+                info = this.getInfoById(clanInfo.clan_id, ["tag"]);
               }
             }
           }
@@ -37,11 +37,15 @@ export class ClansService {
     return info;
   }
 
-  async getInfoById(clanId: any) {
+  async getInfoById(clanId: any, fields: String[] = [], extra: String[] = []) {
     let info;
     await this.http
       .get(
-        `https://api.worldofwarships.ru/wows/clans/info/?application_id=${this.appId}&clan_id=${clanId}`,
+        `https://api.worldofwarships.ru/wows/clans/info/?application_id=${
+          this.appId
+        }&clan_id=${clanId}&fields=${fields.length > 0 ? fields : ""}&extra=${
+          extra.length > 0 ? extra : ""
+        }`,
         {},
         {}
       )
