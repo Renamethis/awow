@@ -30,7 +30,6 @@ export class UserService {
       ) {
         // tslint:disable-next-line:max-line-length
         let info: any = this.parseUrl(event.url);
-        alert(info);
         this.playerInfo.token = info.access_token;
         this.playerInfo.nick = info.nickname;
         this.storage.set("playerInfo", this.playerInfo);
@@ -49,6 +48,10 @@ export class UserService {
             .then(data => {
               this.playerInfo.token = JSON.parse(data.data).data.access_token;
               this.storage.set('playerInfo', this.playerInfo);
+            }).catch(error => {
+              console.log("ERROR!");
+              console.log(error.error);
+              this.storage.remove('playerInfo');
             });
       }
     });
@@ -61,6 +64,9 @@ export class UserService {
         // 15 days in unixtime
         const offset = 1296000;
         this.expiresAt = Number(data.unixtime) + offset;
+      }).catch(error => {
+        console.log("ERROR!");
+        console.log(error.error);
       });
   }
   private parseUrl(url: any) {

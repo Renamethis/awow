@@ -14,10 +14,10 @@
     (ionChange)="searchNames($event)"
   >
   </ion-searchbar>
-  <div *ngIf="flag">
+  <div *ngIf="isSearching">
     <ion-list>
       <ion-item
-        *ngFor="let player of players"
+        *ngFor="let player of playersService.players"
         button
         (click)="applySearch(player.account_id)"
       >
@@ -35,7 +35,7 @@
       </ion-item>
     </ion-list>
   </div>
-  <div *ngIf="!flag">
+  <div *ngIf="!isSearching">
     <ion-list>
       <ion-item *ngFor="let p of range(15)">
         <ion-label>

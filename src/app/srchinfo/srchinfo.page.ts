@@ -1,8 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, APP_INITIALIZER } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { HTTP } from "@ionic-native/http/ngx";
 import { ClansService } from "../services/clans.service";
 import { HelperService } from "../services/helper.service";
+import { PlayersService } from "../services/players.service";
+import { IonItem } from '@ionic/angular';
 @Component({
   selector: "app-srchinfo",
   templateUrl: "./srchinfo.page.html",
@@ -16,28 +18,23 @@ export class SrchinfoPage implements OnInit {
     private route: ActivatedRoute,
     private http: HTTP,
     private clansService: ClansService,
-    private helper: HelperService
+    private helper: HelperService,
+    private playersService: PlayersService,
   ) {}
-
-  ngOnInit() {
-    this.route.params.subscribe(params => {
+  async ngOnInit() {
+    this.init();
+  }
+  async init() {
+    this.route.params.subscribe(async params => {
       this.accid = params["account_id"];
       // tslint:disable-next-line:max-line-length
-      this.http
-        .get(
-          "https://api.worldofwarships.ru/wows/account/info/?application_id=8e1ae50869c452ec624476262bb20f0d&fields=nickname,last_battle_time,statistics.distance,statistics.pvp.battles,statistics.pvp.wins&account_id=" +
-            this.accid,
-          {},
-          {}
-        )
-        .then(async data => {
-          this.player = JSON.parse(data.data).data[this.accid];
-          const clanInfo = await this.clansService.getInfoForPlayer(this.accid);
-          if (clanInfo) {
-            this.player.clanTag = clanInfo.tag;
-          }
-          this.date = this.helper.getTimeString(this.player.last_battle_time);
-        });
+      let data: any = await this.playersService.getPlayerInfo(this.accid, "nickname,last_battle_time,statistics.distance,statistics.pvp.battles,statistics.pvp.wins");
+      this.player = JSON.parse(data.data).data[this.accid];
+      const clanInfo = await this.clansService.getInfoForPlayer(this.accid);
+      if (clanInfo) {
+        this.player.clanTag = clanInfo.tag;
+      }
+      this.date = this.helper.getTimeString(this.player.last_battle_time);
     });
   }
 }
