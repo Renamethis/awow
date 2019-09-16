@@ -27,7 +27,7 @@
       <ion-item>
         <ion-label>Пройденные мили</ion-label>
         <ion-note slot="end" color="primary">{{
-          player.statistics.distance
+          player['statistics.distance']
         }}</ion-note>
       </ion-item>
     </ion-item>
@@ -35,7 +35,7 @@
       <ion-item>
         <ion-label>Победы</ion-label>
         <ion-note slot="end" color="primary">{{
-          player.statistics.pvp.wins
+          player['pvp.wins']
         }}</ion-note>
       </ion-item>
     </ion-item>
@@ -43,7 +43,7 @@
       <ion-item>
         <ion-label>Общее число боев</ion-label>
         <ion-note slot="end" color="primary">{{
-          player.statistics.pvp.battles
+          player['statistics.battles']
         }}</ion-note>
       </ion-item>
     </ion-item>

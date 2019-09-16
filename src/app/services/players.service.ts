@@ -7,6 +7,7 @@ import { ClansService } from "../services/clans.service";
 export class PlayersService {
   private appId: any = "8e1ae50869c452ec624476262bb20f0d";
   players: any[] = [];
+  playerInfo: any = {};
   constructor(private http: HTTP, private clansService: ClansService) { }
   async searchUsers(name: string) {
     this.players = [];
@@ -32,7 +33,26 @@ export class PlayersService {
       console.log(error.error);
     });
   }
-  async getPlayerInfo(account_id: string, fields: string) {
-    return await this.http.get(`https://api.worldofwarships.ru/wows/account/info/?application_id=${this.appId}&account_id=${account_id}&fields=${fields}`,{},{});
+  async getPlayerInfo(account_id: string, fields: string = ``) {
+    if(fields != ``) {
+      fields = `&fields=${fields}`;
+    }
+    return await this.http.get(`https://api.worldofwarships.ru/wows/account/info/?application_id=${this.appId}&account_id=${account_id}${fields}`,{},{});
   }
+  decObject(object: any, parent: string = null) {
+    if(object != null && Object.entries(object).length != 0) {
+       for(let dt of Object.keys(object)) {
+         console.log(object[dt]);
+         if(typeof(object[dt]) == 'object') 
+            this.decObject(object[dt], dt);
+         else {
+           if(parent != null) 
+            this.playerInfo[parent + '.' + dt] = object[dt];
+          else 
+            this.playerInfo[dt] = object[dt];
+         }
+       }
+    }
+  }
+
 } 

@@ -14,6 +14,14 @@ export class SrchinfoPage implements OnInit {
   accid: any;
   player: any;
   date: any;
+  headlines: any = [
+    {'Статистика игрока': {
+      'statistics.battles': 'Проведено боев',
+      'statistics.distance': 'Пройдено миль',
+    }},
+    {},
+    {},
+  ];
   constructor(
     private route: ActivatedRoute,
     private http: HTTP,
@@ -28,12 +36,14 @@ export class SrchinfoPage implements OnInit {
     this.route.params.subscribe(async params => {
       this.accid = params["account_id"];
       // tslint:disable-next-line:max-line-length
-      let data: any = await this.playersService.getPlayerInfo(this.accid, "nickname,last_battle_time,statistics.distance,statistics.pvp.battles,statistics.pvp.wins");
-      this.player = JSON.parse(data.data).data[this.accid];
+      let data: any = await this.playersService.getPlayerInfo(this.accid);
+      this.playersService.decObject(JSON.parse(data.data).data[this.accid]);
+      this.player = this.playersService.playerInfo;
       const clanInfo = await this.clansService.getInfoForPlayer(this.accid);
       if (clanInfo) {
         this.player.clanTag = clanInfo.tag;
       }
+      console.log(this.playersService.playerInfo);
       this.date = this.helper.getTimeString(this.player.last_battle_time);
     });
   }
