@@ -17,7 +17,9 @@ export class ClanInfoPage implements OnInit {
     private route: ActivatedRoute,
     private helper: HelperService,
     private router: Router
-  ) {}
+  ) {
+    console.log(helper.parseHTMLFD('<tr data-reactid=".0.0.1.1.0.1.0.0.1:$0"><td data-reactid=".0.0.1.1.0.1.0.0.1:$0.0"><span data-reactid=".0.0.1.1.0.1.0.0.1:$0.0.$0"><span data-reactid=".0.0.1.1.0.1.0.0.1:$0.0.$0.0">account_id</span></span></td><td data-reactid=".0.0.1.1.0.1.0.0.1:$0.1">numeric</td><td data-reactid=".0.0.1.1.0.1.0.0.1:$0.2"><div data-reactid=".0.0.1.1.0.1.0.0.1:$0.2.0"><p>Идентификатор игрока</p></div></td></tr>'));
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
