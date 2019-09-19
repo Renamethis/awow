@@ -1,9 +1,12 @@
 ion-content {
-    --ion-background-color: #0E2E44;
-    --ion-text-color: #BFF2FF;
-  }
-  ion-header {
     --ion-background-color: #111D2C;
     --ion-text-color: #BFF2FF;
-  }
-  
+}
+ion-header {
+    --ion-text-color: #BFF2FF;
+    --ion-toolbar-background: #0E2E44;
+}
+:root {
+    --ion-searchbar-color: #BFF2FF;
+    --ion-searchbar-background: #2b5979;;
+}
