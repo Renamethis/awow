@@ -6,7 +6,7 @@ ion-header {
     --ion-text-color: #BFF2FF;
     --ion-toolbar-background: #0E2E44;
 }
-:root {
-    --ion-searchbar-color: #BFF2FF;
-    --ion-searchbar-background: #2b5979;
+ion-searchbar {
+    --background: #0E2E44;
+    --color: #BFF2FF;
 }

@@ -9,6 +9,7 @@ import { UserService } from "./services/user.service";
   styleUrls: ["app.component.scss"]
 })
 export class AppComponent {
+  isIos: boolean = false;
   public appPages = [
     {
       title: "Игроки",
@@ -42,6 +43,9 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      if(this.platform.is('ios')) {
+        this.isIos = true;
+      }
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
